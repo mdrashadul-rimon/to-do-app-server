@@ -39,7 +39,7 @@ async function run(){
             res.send(allTask);
         })
 
-        app.post('/addedTask', verifyJWT, async(req, res) =>{
+        app.post('/addedTask', async(req, res) =>{
             const task = req.body;
             const result = await addedTaskCollection.insertOne(task);
             res.send(result);
