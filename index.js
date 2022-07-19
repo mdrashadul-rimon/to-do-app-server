@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 
 const app = express();
@@ -45,12 +45,19 @@ async function run(){
             res.send(result);
         });
 
-        // app.delete('/addedTask/:_id', async,(req,res) =>{
-        //     const id = req.params._id;
-        //     const filter = {id: id};
-        //     const result = await addedTaskCollection.deleteOne(filter);
-        //     res.send(result);
-        // })
+        app.get('/addedTask/:_id', async(req, res) =>{
+            const id = req.params._id;
+            const query = {_id: ObjectId(id)};
+            const result = await addedTaskCollection.findOne(query);
+            res.send(result);
+        })
+
+        app.delete('/addedTask/:_id', async(req,res) =>{
+            const id = req.params._id;
+            const filter = {_id: ObjectId(id)};
+            const result = await addedTaskCollection.deleteOne(filter);
+            res.send(result);
+        })
     }
     finally{
 }
