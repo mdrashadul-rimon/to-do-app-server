@@ -44,6 +44,13 @@ async function run(){
             const result = await addedTaskCollection.insertOne(task);
             res.send(result);
         });
+
+        app.delete('/addedTask/:_id', async,(req,res) =>{
+            const id = req.params._id;
+            const filter = {id: id};
+            const result = await addedTaskCollection.deleteOne(filter);
+            res.send(result);
+        })
     }
     finally{
 }
